@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model news_headlines {
+  id        Int      @id @default(autoincrement())
+  title     String
+  body      String
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model admin_users {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+// Ignore below, because I am using free acount in Vercel, so all my previous tables need to included
+model movies {
+  id     Int     @id(map: "movies_pk") @default(autoincrement())
+  title  String? @db.VarChar(150)
+  genres String? @db.VarChar(50)
+  year   String? @db.VarChar(50)
+  image  String? @db.VarChar(255)
+}
+
+model users {
+  id       Int     @id(map: "users_pk")
+  email    String? @unique(map: "users_un") @db.VarChar(50)
+  gender   String? @db.VarChar(50)
+  password String? @db.VarChar(50)
+  role     String? @db.VarChar(50)
+}
