@@ -5,7 +5,7 @@ import swaggerDocument from '../swagger.json'
 
 const router = Router();
 const SWAGGER_CSS_URL =
-    "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.6.3/swagger-ui.css";
+    "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 
 const v1Routes = [
     {
