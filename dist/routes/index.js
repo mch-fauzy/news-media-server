@@ -25,7 +25,10 @@ const swaggerRoutes = [
     {
         path: '/',
         route: swagger_ui_express_1.default.serve,
-        docs: swagger_ui_express_1.default.setup(swagger_json_1.default, { customCssUrl: SWAGGER_CSS_URL }),
+        docs: swagger_ui_express_1.default.setup(swagger_json_1.default, {
+            customCss: '.swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }',
+            customCssUrl: SWAGGER_CSS_URL
+        }),
     },
 ];
 if (process.env.APP_DOCS === "enabled") {
