@@ -19,17 +19,22 @@ To get started with the API, follow the steps below:
    news-media-server
    ```
 
-3. Install the required dependencies:
+3. Rename `.env.example` to:
+   ```
+   .env
+   ```
+
+4. Install the required dependencies:
    ```
    npm install
    ```
 
-4. Compile Typescript into Javascript code:
+5. Compile Typescript into Javascript code:
    ```
    npm run build
    ```
 
-5. Start the server:
+6. Start the server:
    ```
    npm run dev
    ```
