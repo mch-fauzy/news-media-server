@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "https://news-media-server.vercel.app/"
+            "url": "https://news-media-server-idn.vercel.app/"
         },
         {
             "url": "http://localhost:3000"

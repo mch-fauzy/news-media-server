@@ -2,7 +2,7 @@
 
 This is a CRUD (Create, Read, Update, Delete) API for managing news information and use test of external API from [JSON Placeholder](https://jsonplaceholder.typicode.com/).
 
-You can try the API in [here](https://news-media-server.vercel.app) or run it manually below.
+You can try the API in [here](https://news-media-server-idn.vercel.app) or run it manually below.
 
 ## Getting Started
 
