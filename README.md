@@ -4,6 +4,15 @@ This is a CRUD (Create, Read, Update, Delete) API for managing news information 
 
 You can try the API in [here](https://news-media-server-idn.vercel.app) or run it manually below.
 
+## Stack
+- NodeJS with Typescript
+- Express
+- Postgresql
+- Prisma ORM
+- axios
+- Redis
+- Vercel
+
 ## Getting Started
 
 To get started with the API, follow the steps below:
@@ -39,7 +48,7 @@ To get started with the API, follow the steps below:
    npm run dev
    ```
 
-## Potential Improvement:
+## Potential Improvement
 - Add Logger to make debug easier
 - Implement authentication and authorization
 - Nice to have expected error handling
