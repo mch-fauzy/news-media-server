@@ -3,7 +3,7 @@ import { Request } from 'express';
 export interface NewsHeadlineCreate {
     title: string;
     body: string;
-    userId: number;
+    userId: number; // Ideally automatically infered from logged user except Admin which can create based on existing user
 }
 
 export interface NewsHeadlineUpdate {
@@ -16,14 +16,14 @@ export interface NewsHeadlinePartialUpdate {
     body?: string;
 }
 
-export interface AddRequest extends Request {
+export interface NewsHeadlineAddRequest extends Request {
     body: NewsHeadlineCreate
 }
 
-export interface EditRequest extends Request {
+export interface NewsHeadlineEditRequest extends Request {
     body: NewsHeadlineUpdate
 }
 
-export interface PartialEditRequest extends Request {
+export interface NewsHeadlinePartialEditRequest extends Request {
     body: NewsHeadlinePartialUpdate
 }
