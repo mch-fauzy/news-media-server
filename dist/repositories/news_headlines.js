@@ -16,7 +16,7 @@ class NewsHeadlinesRepository {
     static getNewsHeadlines() {
         return __awaiter(this, void 0, void 0, function* () {
             return prisma.news_headlines.findMany({
-                where: { deletedAt: null }, // Exclude soft-deleted posts
+                where: { deletedAt: null }, // Exclude soft-deleted news headlines
                 orderBy: { createdAt: 'desc' },
             });
         });

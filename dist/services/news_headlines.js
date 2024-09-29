@@ -19,12 +19,12 @@ const viewNewsHeadlines = (req, res) => __awaiter(void 0, void 0, void 0, functi
     try {
         const cachedNewsHeadlines = yield redis_1.redis.get(constants_1.SHARED.REDIS.NEWS_HEADLINES_KEY);
         if (cachedNewsHeadlines) {
-            res.json(JSON.parse(cachedNewsHeadlines));
+            res.status(axios_1.HttpStatusCode.Ok).json(JSON.parse(cachedNewsHeadlines));
             return;
         }
         const newsHeadlines = yield news_headlines_1.NewsHeadlinesRepository.getNewsHeadlines();
         yield redis_1.redis.setex(constants_1.SHARED.REDIS.NEWS_HEADLINES_KEY, constants_1.SHARED.REDIS.CACHE_EXPIRY, JSON.stringify(newsHeadlines));
-        res.json(newsHeadlines);
+        res.status(axios_1.HttpStatusCode.Ok).json(newsHeadlines);
     }
     catch (error) {
         if (error instanceof Error) {
@@ -35,8 +35,13 @@ const viewNewsHeadlines = (req, res) => __awaiter(void 0, void 0, void 0, functi
 exports.viewNewsHeadlines = viewNewsHeadlines;
 const addNewsHeadline = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, body, userId } = req.body;
+    const data = { title, body, userId };
+    if (title === undefined || body === undefined || userId === undefined) {
+        res.status(axios_1.HttpStatusCode.BadRequest).json({ message: 'Title, body, and user id are required' });
+        return;
+    }
     try {
-        yield news_headlines_1.NewsHeadlinesRepository.createNewsHeadline({ title, body, userId });
+        yield news_headlines_1.NewsHeadlinesRepository.createNewsHeadline(data);
         // Invalidate the cache (delete the 'newsHeadlines' key)
         yield redis_1.redis.del(constants_1.SHARED.REDIS.NEWS_HEADLINES_KEY);
         res.status(axios_1.HttpStatusCode.Created).json({ message: constants_1.SHARED.MESSAGE.SUCCESS });
@@ -50,8 +55,9 @@ const addNewsHeadline = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.addNewsHeadline = addNewsHeadline;
 const editNewsHeadlineById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const data = req.body;
-    if (!data.title || !data.body) {
+    const { title, body } = req.body;
+    const data = { title, body };
+    if (title === undefined || body === undefined) {
         res.status(axios_1.HttpStatusCode.BadRequest).json({ message: 'Title and body are required' });
         return;
     }
@@ -68,14 +74,15 @@ const editNewsHeadlineById = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.editNewsHeadlineById = editNewsHeadlineById;
 const partialEditNewsHeadlineById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const partialData = req.body;
-    if (Object.keys(partialData).length === 0) {
+    if (Object.keys(req.body).length === 0) {
         res.status(axios_1.HttpStatusCode.BadRequest).json({ message: 'No data provided for update.' });
         return;
     }
+    const { id } = req.params;
+    const { title, body } = req.body;
+    const data = { title, body };
     try {
-        yield news_headlines_1.NewsHeadlinesRepository.patchNewsHeadlineById(parseInt(id), partialData);
+        yield news_headlines_1.NewsHeadlinesRepository.patchNewsHeadlineById(parseInt(id), data);
         yield redis_1.redis.del(constants_1.SHARED.REDIS.NEWS_HEADLINES_KEY);
         res.status(axios_1.HttpStatusCode.Ok).json({ message: constants_1.SHARED.MESSAGE.SUCCESS });
     }
@@ -91,7 +98,7 @@ const softRemoveNewsHeadlineById = (req, res) => __awaiter(void 0, void 0, void 
     try {
         yield news_headlines_1.NewsHeadlinesRepository.softDeleteNewsHeadlineById(parseInt(id));
         yield redis_1.redis.del(constants_1.SHARED.REDIS.NEWS_HEADLINES_KEY);
-        res.status(axios_1.HttpStatusCode.NoContent).json({ message: constants_1.SHARED.MESSAGE.SUCCESS });
+        res.status(axios_1.HttpStatusCode.Ok).json({ message: constants_1.SHARED.MESSAGE.SUCCESS });
     }
     catch (error) {
         if (error instanceof Error) {
@@ -105,7 +112,7 @@ const removeNewsHeadlinesById = (req, res) => __awaiter(void 0, void 0, void 0, 
     try {
         yield news_headlines_1.NewsHeadlinesRepository.deleteNewsHeadlineById(parseInt(id));
         yield redis_1.redis.del(constants_1.SHARED.REDIS.NEWS_HEADLINES_KEY);
-        res.status(axios_1.HttpStatusCode.NoContent).json({ message: constants_1.SHARED.MESSAGE.SUCCESS });
+        res.status(axios_1.HttpStatusCode.Ok).json({ message: constants_1.SHARED.MESSAGE.SUCCESS });
     }
     catch (error) {
         if (error instanceof Error) {

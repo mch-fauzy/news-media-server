@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.jsonPlaceholderRouterV1 = void 0;
+const express_1 = require("express");
+const json_placeholder_1 = require("../../services/json_placeholder");
+const jsonPlaceholderRouterV1 = (0, express_1.Router)();
+exports.jsonPlaceholderRouterV1 = jsonPlaceholderRouterV1;
+jsonPlaceholderRouterV1.get('/posts', json_placeholder_1.viewAllPosts);
+jsonPlaceholderRouterV1.get('/posts/:id', json_placeholder_1.viewPostById);
+jsonPlaceholderRouterV1.post('/posts', json_placeholder_1.addPost);
+jsonPlaceholderRouterV1.put('/posts/:id', json_placeholder_1.editPostById);
+jsonPlaceholderRouterV1.patch('/posts/:id', json_placeholder_1.partialEditPostById);
+jsonPlaceholderRouterV1.delete('/posts/:id', json_placeholder_1.removePostById);
