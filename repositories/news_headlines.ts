@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { NewsHeadlineCreate, NewsHeadlinePartialUpdate, NewsHeadlineUpdate } from '../models/news_headlines';
 
 const prisma = new PrismaClient();
 
@@ -10,20 +11,20 @@ class NewsHeadlinesRepository {
         });
     }
 
-    static async createNewsHeadline(newsHeadline: Required<{ title: string, body: string, userId: number }>) {
+    static async createNewsHeadline(newsHeadline: NewsHeadlineCreate) {
         return prisma.news_headlines.create({
             data: newsHeadline,
         });
     }
 
-    static async updateNewsHeadlineById(newsHeadlineId: number, newsHeadline: Required<{ title: string, body: string }>) {
+    static async updateNewsHeadlineById(newsHeadlineId: number, newsHeadline: NewsHeadlineUpdate) {
         return prisma.news_headlines.update({
             where: { id: newsHeadlineId },
             data: newsHeadline,
         });
     }
 
-    static async patchNewsHeadlineById(newsHeadlineId: number, partialNewsHeadline: Partial<{ title: string, body: string }>) {
+    static async patchNewsHeadlineById(newsHeadlineId: number, partialNewsHeadline: NewsHeadlinePartialUpdate) {
         return prisma.news_headlines.update({
             where: { id: newsHeadlineId },
             data: partialNewsHeadline,

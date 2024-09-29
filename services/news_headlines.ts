@@ -3,6 +3,7 @@ import { HttpStatusCode } from 'axios';
 import { Request, Response } from 'express';
 import { redis } from '../configs/redis';
 import { SHARED } from '../shared/constants';
+import { AddRequest, EditRequest, PartialEditRequest } from '../models/news_headlines';
 
 // Request and Response must be included
 export const viewNewsHeadlines = async (req: Request, res: Response) => {
@@ -23,7 +24,7 @@ export const viewNewsHeadlines = async (req: Request, res: Response) => {
     }
 };
 
-export const addNewsHeadline = async (req: Request, res: Response) => {
+export const addNewsHeadline = async (req: AddRequest, res: Response) => {
     const { title, body, userId } = req.body;
 
     try {
@@ -38,17 +39,17 @@ export const addNewsHeadline = async (req: Request, res: Response) => {
     }
 };
 
-export const editNewsHeadlineById = async (req: Request, res: Response) => {
+export const editNewsHeadlineById = async (req: EditRequest, res: Response) => {
     const { id } = req.params;
-    const { title, body } = req.body;
+    const data = req.body;
 
-    if (!title || !body) {
+    if (!data.title || !data.body) {
         res.status(HttpStatusCode.BadRequest).json({ message: 'Title and body are required' });
         return
     }
 
     try {
-        await NewsHeadlinesRepository.updateNewsHeadlineById(parseInt(id), { title, body });
+        await NewsHeadlinesRepository.updateNewsHeadlineById(parseInt(id), data);
         await redis.del(SHARED.REDIS.NEWS_HEADLINES_KEY);
         res.status(HttpStatusCode.Ok).json({ message: SHARED.MESSAGE.SUCCESS });
     } catch (error) {
@@ -58,7 +59,7 @@ export const editNewsHeadlineById = async (req: Request, res: Response) => {
     }
 };
 
-export const partialEditNewsHeadlineById = async (req: Request, res: Response) => {
+export const partialEditNewsHeadlineById = async (req: PartialEditRequest, res: Response) => {
     const { id } = req.params;
     const partialData = req.body;
 

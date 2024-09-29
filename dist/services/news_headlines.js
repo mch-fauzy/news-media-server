@@ -50,13 +50,13 @@ const addNewsHeadline = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.addNewsHeadline = addNewsHeadline;
 const editNewsHeadlineById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { title, body } = req.body;
-    if (!title || !body) {
+    const data = req.body;
+    if (!data.title || !data.body) {
         res.status(axios_1.HttpStatusCode.BadRequest).json({ message: 'Title and body are required' });
         return;
     }
     try {
-        yield news_headlines_1.NewsHeadlinesRepository.updateNewsHeadlineById(parseInt(id), { title, body });
+        yield news_headlines_1.NewsHeadlinesRepository.updateNewsHeadlineById(parseInt(id), data);
         yield redis_1.redis.del(constants_1.SHARED.REDIS.NEWS_HEADLINES_KEY);
         res.status(axios_1.HttpStatusCode.Ok).json({ message: constants_1.SHARED.MESSAGE.SUCCESS });
     }
