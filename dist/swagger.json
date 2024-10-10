@@ -182,8 +182,8 @@
                 "tags": [
                     "newsHeadlines"
                 ],
-                "summary": "Soft remove news headline record by ID",
-                "operationId": "softRemoveNewsHeadlineById",
+                "summary": "Remove news headline record by ID",
+                "operationId": "removeNewsHeadlinesById",
                 "parameters": [
                     {
                         "name": "id",
@@ -214,13 +214,13 @@
                 }
             }
         },
-        "/v1/news-headlines/hard/{id}": {
-            "delete": {
+        "/v1/news-headlines/{id}/deleted": {
+            "patch": {
                 "tags": [
                     "newsHeadlines"
                 ],
-                "summary": "Remove news headline record by ID",
-                "operationId": "removeNewsHeadlinesById",
+                "summary": "Soft remove news headline record by ID",
+                "operationId": "softRemoveNewsHeadlineById",
                 "parameters": [
                     {
                         "name": "id",
