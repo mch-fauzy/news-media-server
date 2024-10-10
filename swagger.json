@@ -214,7 +214,7 @@
                 }
             }
         },
-        "/v1/news-headlines/{id}/soft-remove": {
+        "/v1/news-headlines/{id}/deleted": {
             "patch": {
                 "tags": [
                     "newsHeadlines"
