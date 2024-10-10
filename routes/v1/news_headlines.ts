@@ -7,7 +7,7 @@ newsHeadlinesRouterV1.get('/news-headlines', viewNewsHeadlines);
 newsHeadlinesRouterV1.post('/news-headlines', addNewsHeadline);
 newsHeadlinesRouterV1.put('/news-headlines/:id', editNewsHeadlineById);
 newsHeadlinesRouterV1.patch('/news-headlines/:id', partialEditNewsHeadlineById);
-newsHeadlinesRouterV1.delete('/news-headlines/:id', softRemoveNewsHeadlineById);
-newsHeadlinesRouterV1.delete('/news-headlines/hard/:id', removeNewsHeadlinesById);
+newsHeadlinesRouterV1.patch('/news-headlines/:id/soft-remove', softRemoveNewsHeadlineById); // better to merge softRemove to partialEdit and add logic if data is marked as deleted cant be edited and ask db admin to restore 
+newsHeadlinesRouterV1.delete('/news-headlines/:id', removeNewsHeadlinesById)
 
 export { newsHeadlinesRouterV1 };
